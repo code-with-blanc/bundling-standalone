@@ -1,24 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import Editor from './views/Editor.jsx';
+import Result from './views/Result.jsx';
+
 import './App.css';
+
+let source = "";
+
+const setText = (value) => {
+  source = value;
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="area-input">
+        <Editor text={source} />
+        <button> Compile </button>
+      </div>
+      <div className="area-output">
+        <Result
+          code="code"
+          sourceMap="map"
+          ast="ast"
+        />
+      </div>
     </div>
   );
 }
