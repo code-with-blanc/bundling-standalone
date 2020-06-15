@@ -1,13 +1,15 @@
 import React from 'react'
 
+import TextArea from './TextArea';
+
 const Result = ({
   code, sourceMap, ast
 }) => {
   return (
     <div>
-      <pre>{code}</pre>
-      <pre>{sourceMap}</pre>
-      <pre>{ast}</pre>
+      <TextArea text={code} label="Code"/>
+      <TextArea text={sourceMap} label="Source Map"/>
+      <TextArea text={ast} label="AST"/>
     </div>
   )
 }

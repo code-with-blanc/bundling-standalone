@@ -1,0 +1,16 @@
+.textarea__div {
+  margin-left: 24px;
+  margin-right: 24px;
+}
+
+.textarea__label {
+  color: white;
+  font-size: small;
+  margin: 4px
+}
+
+.textarea__textarea {
+  width: 100%;
+  min-height: 20vh;
+  height: 26vh;
+}
