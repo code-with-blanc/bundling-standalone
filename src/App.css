@@ -17,11 +17,6 @@
   grid-area: left;
 }
 
-.area-input > button {
-  float: right;
-  margin-right: 24px;
-}
-
 .area-output {
   grid-area: right;
 }

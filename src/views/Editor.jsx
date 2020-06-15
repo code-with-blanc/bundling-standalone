@@ -5,14 +5,18 @@ import TextArea from './TextArea';
 import './Editor.css';
 
 const Editor = ({
-  text, setText
+  text, onChange, onCompile
 }) => {
   return (
     <div>
       <TextArea
         text={text}
-        onChange={setText}
+        onChange={onChange}
       />
+      <button
+        className="editor__compile"
+        onClick={onCompile}
+      > Compile </button>
     </div>
   )
 }
