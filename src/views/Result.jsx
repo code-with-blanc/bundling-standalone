@@ -7,9 +7,9 @@ const Result = ({
 }) => {
   return (
     <div>
-      <TextArea text={code} label="Code"/>
-      <TextArea text={sourceMap} label="Source Map"/>
-      <TextArea text={ast} label="AST"/>
+      <TextArea text={code || ''} label="Code"/>
+      <TextArea text={sourceMap || ''} label="Source Map"/>
+      <TextArea text={ast || ''} label="AST"/>
     </div>
   )
 }

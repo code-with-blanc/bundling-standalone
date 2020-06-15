@@ -1,21 +1,26 @@
 import React, {useState} from 'react';
+import * as Babel from '@babel/standalone';
 
 import Editor from './views/Editor.jsx';
 import Result from './views/Result.jsx';
 
 import './App.css';
 
+const babelConfig = {
+  presets: ['env'],
+};
+
 function App() {
   const [source, setSource] = useState('');
   const [compiled, setCompiled] = useState({});
 
   const compile = () => {
-    console.log('definetly did compile!');
-  
+    const result = Babel.transform(source, babelConfig);
+
     setCompiled({
-      source: 'Source',
-      map: 'A beautiful map',
-      ast: 'An amazing AST'
+      source: result.code,
+      map: result.map,
+      ast: result.ast,
     });
   }
 
