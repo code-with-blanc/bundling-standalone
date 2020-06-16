@@ -1,34 +1,23 @@
 import React, {useState} from 'react';
-import * as Babel from '@babel/standalone';
 
 import Editor from './views/Editor.jsx';
 import Result from './views/Result.jsx';
 import ErrorView from './views/ErrorView.jsx';
 
-import './App.css';
+import { babelTranspile } from './compile.js';
 
-const babelConfig = {
-  presets: ['env'],
-  generatorOpts: {
-    sourceMaps: true,
-  }
-};
+import './App.css';
 
 function App() {
   const [result, setResult] = useState({});
   const [compilationError, setCompilationError] = useState(undefined);
 
   const compile = ({ sources }) => {
-    setCompilationError(false);
+    setCompilationError(null);
 
     try {
-      const result = Babel.transform(sources[0], babelConfig);
-      console.log(result);
-  
       setResult({
-        source: result.code,
-        map: result.map,
-        ast: result.ast,
+        source: babelTranspile(sources),
       });
     } catch(e) {
       console.log(e);

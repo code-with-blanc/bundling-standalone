@@ -3,13 +3,23 @@ import React, { useState } from 'react'
 import TextArea from './TextArea';
 import './Editor.css';
 
-const initialCode = `console.log('Hello World!');`;
+const initialCode1 = `\
+import { value } from './source_2.js';
+
+console.log('Hello World!');
+console.log(value);
+`;
+const initialCode2 = `\
+const value = 2;
+
+export { value };
+`;
 
 const Editor = ({
   onCompile
 }) => {
-  const [source1, setSource1] = useState(initialCode);
-  const [source2, setSource2] = useState("");
+  const [source1, setSource1] = useState(initialCode1);
+  const [source2, setSource2] = useState(initialCode2);
 
   return (
     <div>
