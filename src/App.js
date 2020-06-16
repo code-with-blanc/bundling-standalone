@@ -7,7 +7,6 @@ import ErrorView from './views/ErrorView.jsx';
 
 import './App.css';
 
-const initialCode = `console.log('Hello World!');`;
 const babelConfig = {
   presets: ['env'],
   generatorOpts: {
@@ -16,18 +15,17 @@ const babelConfig = {
 };
 
 function App() {
-  const [source, setSource] = useState(initialCode);
-  const [compiled, setCompiled] = useState({});
+  const [result, setResult] = useState({});
   const [compilationError, setCompilationError] = useState(undefined);
 
-  const compile = () => {
+  const compile = ({ sources }) => {
     setCompilationError(false);
 
     try {
-      const result = Babel.transform(source, babelConfig);
+      const result = Babel.transform(sources[0], babelConfig);
       console.log(result);
   
-      setCompiled({
+      setResult({
         source: result.code,
         map: result.map,
         ast: result.ast,
@@ -42,8 +40,6 @@ function App() {
     <div className="App">
       <div className="area-input">
         <Editor
-          text={source}
-          onChange={(v) => setSource(v)}
           onCompile={compile}
         />
       </div>
@@ -51,9 +47,9 @@ function App() {
         {
           !compilationError ? (
             <Result
-              code={compiled.source}
-              sourceMap={compiled.map}
-              ast={compiled.ast}
+              code={result.source}
+              sourceMap={result.map}
+              ast={result.ast}
             />
           ) : (
             <ErrorView
