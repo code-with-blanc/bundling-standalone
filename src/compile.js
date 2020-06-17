@@ -7,29 +7,33 @@ export function babelTranspile(sources) {
     presets: ['env'],
   };
 
-  let output = '';
+  let output = [];
 
   sources.forEach((src, i) => {
-    output += `//// Transpiled sources[${i}]\n\n`;
-    output += Babel.transform(src, babelConfig).code;
-    output += '\n\n\n\n';
+    console.log(`[${i}] Begin transpile`)
+    output.push(Babel.transform(src, babelConfig).code);
+    console.log(`[${i}] End transpile`)
   });
-
+  
   return output;
 };
 
-export async function rollupTranspile(sources) {
+export async function rollupBundle(sources) {
   const inputOptions = {
     input: 'source_1.js',
     plugins: [
       virtual({
         'source_1.js': sources[0],
         'source_2.js': sources[1],
-    })],
+      })
+    ],
   };
-  const outputOptions = {};
-  
+  const outputOptions = {
+    plugins: [
+    ]
+  };
 
+  console.log('Begin rollup')
   // create a bundle
   const bundle = await rollup.rollup(inputOptions);
 
@@ -37,6 +41,9 @@ export async function rollupTranspile(sources) {
   // you can call this function multiple times on 
   // the same bundle object
   const { output } = await bundle.generate(outputOptions);
+
+  console.log('End rollup')
+
   return output[0].code;
 };
 

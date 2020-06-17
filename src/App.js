@@ -4,7 +4,7 @@ import Editor from './views/Editor.jsx';
 import Result from './views/Result.jsx';
 import ErrorView from './views/ErrorView.jsx';
 
-import { rollupTranspile } from './compile.js';
+import { rollupBundle, babelTranspile } from './compile.js';
 
 import './App.css';
 
@@ -20,8 +20,11 @@ function App() {
     setAppState(STATE_COMPILING);
 
     try {
+      const bundle = await rollupBundle(sources);
+      const transpiled = babelTranspile([bundle])[0];
+
       setResult({
-        source: await rollupTranspile(sources),
+        source: transpiled,
       });
       setAppState(STATE_SUCCESS);
     } catch(e) {

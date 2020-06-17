@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/standalone": "^7.10.2",
+    "@rollup/plugin-babel": "^5.0.3",
     "@rollup/plugin-virtual": "^2.0.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
