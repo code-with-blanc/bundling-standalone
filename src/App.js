@@ -4,24 +4,30 @@ import Editor from './views/Editor.jsx';
 import Result from './views/Result.jsx';
 import ErrorView from './views/ErrorView.jsx';
 
-import { babelTranspile } from './compile.js';
+import { rollupTranspile } from './compile.js';
 
 import './App.css';
 
+const STATE_SUCCESS = 'success';
+const STATE_COMPILING = 'compiling';
+const STATE_ERROR = 'error';
+
 function App() {
   const [result, setResult] = useState({});
-  const [compilationError, setCompilationError] = useState(undefined);
+  const [appState, setAppState] = useState(STATE_SUCCESS);
 
-  const compile = ({ sources }) => {
-    setCompilationError(null);
+  const compile = async ({ sources }) => {
+    setAppState(STATE_COMPILING);
 
     try {
       setResult({
-        source: babelTranspile(sources),
+        source: await rollupTranspile(sources),
       });
+      setAppState(STATE_SUCCESS);
     } catch(e) {
       console.log(e);
-      setCompilationError(e);
+      setResult({ error: e });
+      setAppState(STATE_ERROR);
     }
   }
 
@@ -34,17 +40,25 @@ function App() {
       </div>
       <div className="area-output">
         {
-          !compilationError ? (
+          appState === STATE_SUCCESS ? (
             <Result
               code={result.source}
-              sourceMap={result.map}
-              ast={result.ast}
             />
-          ) : (
+          ) : null
+        }
+        {
+          appState === STATE_ERROR ? (
             <ErrorView
-              error={compilationError}
+              error={result.error}
             />
-          )
+          ) : null
+        }
+        {
+          appState === STATE_COMPILING ? (
+            <div>
+              Compiling...
+            </div>
+          ) : null
         }
       </div>
     </div>

@@ -4,15 +4,15 @@ import TextArea from './TextArea';
 import './Editor.css';
 
 const initialCode1 = `\
-import { value } from './source_2.js';
+import getMessage from './source_2.js';
 
-console.log('Hello World!');
-console.log(value);
+const message = getMessage();
+console.log(message);
 `;
 const initialCode2 = `\
-const value = 2;
+const getMessage = () => { return 'Hello world!' };
 
-export { value };
+export default getMessage;
 `;
 
 const Editor = ({
