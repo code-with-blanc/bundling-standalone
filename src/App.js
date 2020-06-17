@@ -21,10 +21,11 @@ function App() {
 
     try {
       const bundle = await rollupBundle(sources);
-      const transpiled = babelTranspile([bundle])[0];
+      const transpiled = babelTranspile(bundle);
 
       setResult({
-        source: transpiled,
+        bundled: bundle,
+        transpiled: transpiled,
       });
       setAppState(STATE_SUCCESS);
     } catch(e) {
@@ -45,14 +46,8 @@ function App() {
         {
           appState === STATE_SUCCESS ? (
             <Result
-              code={result.source}
-            />
-          ) : null
-        }
-        {
-          appState === STATE_ERROR ? (
-            <ErrorView
-              error={result.error}
+              bundled={result.bundled}
+              transpiled={result.transpiled}
             />
           ) : null
         }
@@ -61,6 +56,13 @@ function App() {
             <div>
               Compiling...
             </div>
+          ) : null
+        }
+        {
+          appState === STATE_ERROR ? (
+            <ErrorView
+              error={result.error}
+            />
           ) : null
         }
       </div>
